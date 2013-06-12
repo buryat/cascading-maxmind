@@ -5,15 +5,17 @@ Geo lookup function for cascading, uses MaxMind GeoIPCity.
 
 ## Usage ##
 =================
-	import buryat.cascading.geo.GeoLookup;
-	
-	…
-	
-	Pipe countriesAndCities = new Each(
-		inputPipe,
-		new Fields("ip"),
-		new GeoLookup(new Fields("country", "city"))
-	);
+```java
+import buryat.cascading.geo.GeoLookup;
+
+…
+
+Pipe countriesAndCities = new Each(
+	inputPipe,
+	new Fields("ip"),
+	new GeoLookup(new Fields("country", "city"))
+);
+```
 	
 Remember that GeoLookup uses GeoIPCity.dat file from Hadoop DistributedCache, so you need to add the file to the cache before using the function.
 
