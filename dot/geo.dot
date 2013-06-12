@@ -1,0 +1,11 @@
+digraph G {
+  1 [label = "Each('input')[GeoLookup[decl:[{2}:'country', 'city']][args:1]]"];
+  2 [label = "Hfs['TextDelimited[[UNKNOWN]->['country', 'city']]']['output']"];
+  3 [label = "Hfs['TextDelimited[['ip']]']['input']"];
+  4 [label = "[head]\nConcurrent, Inc - Cascading 2.1.6\nHadoop:"];
+  5 [label = "[tail]"];
+  1 -> 2 [label = "[{2}:'country', 'city']\n[{2}:'country', 'city']"];
+  4 -> 3 [label = ""];
+  2 -> 5 [label = "[{2}:'country', 'city']\n[{2}:'country', 'city']"];
+  3 -> 1 [label = "[{1}:'ip']\n[{1}:'ip']"];
+}
