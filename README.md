@@ -1,6 +1,6 @@
 cascading-maxmind
 =================
-Geo lookup function for cascading, uses MaxMind GeoIPCity.
+Geo lookup function for [cascading](http://www.cascading.org/), uses [MaxMind GeoIPCity](http://www.maxmind.com/en/city).
 
 
 ## Usage ##
