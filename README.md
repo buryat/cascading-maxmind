@@ -23,7 +23,7 @@ I've included an example project, which shows how Hadoop DistributedCache and Ge
 
 	mvn clean package
 	
-	hadoop jar ./target/cascading-maxmind-0.1.jar hdfs:///GeoIPCity.dat input output
+	hadoop jar ./target/cascading-maxmind-0.1.jar buryat.cascading.geo.Main hdfs:///GeoIPCity.dat input output
 	
 
 ![Project's flow](http://sedictor.ru/13/06/12/1371023185.png "Project's flow")
