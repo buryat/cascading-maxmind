@@ -12,7 +12,7 @@ import buryat.cascading.geo.GeoLookup;
 Pipe countriesAndCities = new Each(
 	inputPipe,
 	new Fields("ip"),
-	new GeoLookup(new Fields("country", "city"))
+	new GeoLookup(new Fields("country", "city", "dma_code"))
 );
 ```
 	
@@ -23,11 +23,19 @@ I've included an example project, which shows how Hadoop DistributedCache and Ge
 
 	mvn clean package
 	
-	hadoop jar ./target/cascading-maxmind-0.1.jar buryat.cascading.geo.Main hdfs:///GeoIPCity.dat input output
+	hadoop jar ./target/cascading-maxmind-0.1.jar buryat.cascading.geo.Main hdfs:///GeoIPCity.dat input/ips.txt output
 	
 
-![Project's flow](http://sedictor.ru/13/06/12/1371023185.png "Project's flow")
+![Project's flow](https://raw.github.com/buryat/cascading-maxmind/master/dot/geo.png "Project's flow")
+
+##Example project##
+Another example project shows how cascading-maxmind might be used to process data produced by hive. I've included a sample dataset which you may run cascading-maxmind against.
+
+	mvn clean package
 	
+	hadoop jar ./target/cascading-maxmind-0.1.jar buryat.cascading.geo.Date hdfs:///GeoIPCity.dat input/dates.txt output
+	
+![Project's flow](https://raw.github.com/buryat/cascading-maxmind/master/dot/date.png "Project's flow")
 	
 ##Tested on##
 * Cascading 2.1.6
