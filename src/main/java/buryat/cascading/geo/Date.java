@@ -18,14 +18,14 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Properties;
 
-public class Main {
+public class Date {
     public static void main(String[] args) {
         String geodbPath = args[0];
         String inputPath = args[1];
         String outputPath = args[2];
 
         JobConf jobConf = new JobConf();
-        jobConf.setJarByClass(Main.class);
+        jobConf.setJarByClass(Date.class);
 
         try {
             DistributedCache.addCacheFile(new URI(geodbPath), jobConf);
@@ -39,10 +39,14 @@ public class Main {
 
         HadoopFlowConnector flowConnector = new HadoopFlowConnector(properties);
 
-
         Tap inputTap = new Hfs(
                 new TextDelimited(
-                        new Fields("ip"), "\t"
+                        new Fields(
+                            "date",
+                            "ip",
+                            "count"
+                        ),
+                        "\1" // Hive default delimiter
                 ),
                 inputPath
         );
@@ -55,7 +59,7 @@ public class Main {
         );
 
         Pipe input = new Pipe("input");
-        Pipe output = Geo.ip(input);
+        Pipe output = Geo.date(input);
 
         FlowDef flowDef = FlowDef.flowDef()
                 .setName("geo")
@@ -63,7 +67,7 @@ public class Main {
                 .addTailSink(output, outputTap);
 
         Flow flow = flowConnector.connect(flowDef);
-        flow.writeDOT("dot/geo.dot");
+        flow.writeDOT("dot/date.dot");
         flow.complete();
     }
 }

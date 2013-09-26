@@ -17,17 +17,18 @@ import cascading.CascadingException;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 public class GeoLookup extends BaseOperation<Tuple> implements Function<Tuple> {
     public GeoLookup() {
         super(1, new Fields("ip"));
     }
+
     public GeoLookup(Fields fields) {
         super(1, fields);
     }
 
     LookupService geols;
+
     public void prepare(FlowProcess flowProcess, OperationCall<Tuple> call) {
         if (geols == null) {
             try {
@@ -48,7 +49,7 @@ public class GeoLookup extends BaseOperation<Tuple> implements Function<Tuple> {
             throw new CascadingException("Error loading MaxMind GeoIPCity DB");
         }
 
-        call.setContext(Tuple.size(2));
+        call.setContext(Tuple.size(3));
     }
 
     public void geoDbInit(String file) {
@@ -64,10 +65,18 @@ public class GeoLookup extends BaseOperation<Tuple> implements Function<Tuple> {
 
         Tuple result = functionCall.getContext();
         String ip = arguments.getString(0);
+
         Location location = geols.getLocation(ip);
 
-        result.set(0, location.countryName);
-        result.set(1, location.city);
+        if (location != null) {
+            result.set(0, location.countryName);
+            result.set(1, location.city);
+            result.set(2, location.dma_code);
+        } else {
+            result.set(0, null);
+            result.set(1, null);
+            result.set(2, null);
+        }
 
         functionCall.getOutputCollector().add(result);
     }

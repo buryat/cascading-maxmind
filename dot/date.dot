@@ -1,0 +1,17 @@
+digraph G {
+  1 [label = "Every('input')[Sum[decl:[{1}:'cnt']][args:1]]"];
+  2 [label = "Hfs['TextDelimited[[UNKNOWN]->['date', 'dma_code', 'cnt']]']['output']"];
+  3 [label = "GroupBy('input')[by:['date', 'dma_code']]"];
+  4 [label = "Each('input')[CompositeFunction[decl:[{3}:'date', 'dma_code', 'cnt']]]"];
+  5 [label = "Each('input')[GeoLookup[decl:[{3}:'country', 'city', 'dma_code']][args:1]]"];
+  6 [label = "Hfs['TextDelimited[['date', 'ip', 'count']]']['input/000386_0']"];
+  7 [label = "[head]\nConcurrent, Inc - Cascading 2.1.6\nHadoop:"];
+  8 [label = "[tail]"];
+  1 -> 2 [label = "[{3}:'date', 'dma_code', 'cnt']\n[{3}:'date', 'dma_code', 'cnt']"];
+  5 -> 4 [label = "[{3}:'date', 'dma_code', 'count']\n[{3}:'date', 'dma_code', 'count']"];
+  4 -> 3 [label = "[{3}:'date', 'dma_code', 'cnt']\n[{3}:'date', 'dma_code', 'cnt']"];
+  3 -> 1 [label = "input[{2}:'date', 'dma_code']\n[{3}:'date', 'dma_code', 'cnt']"];
+  7 -> 6 [label = ""];
+  2 -> 8 [label = "[{3}:'date', 'dma_code', 'cnt']\n[{3}:'date', 'dma_code', 'cnt']"];
+  6 -> 5 [label = "[{3}:'date', 'ip', 'count']\n[{3}:'date', 'ip', 'count']"];
+}

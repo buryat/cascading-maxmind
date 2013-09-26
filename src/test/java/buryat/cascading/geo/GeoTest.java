@@ -13,7 +13,7 @@ import cascading.tuple.Tuple;
 
 public class GeoTest {
     @Test
-    public void testLookup() {
+    public void ipLookup() {
         Fields fieldsDeclaration = new Fields("ip");
         GeoLookup geoLookup = new GeoLookup(fieldsDeclaration);
         geoLookup.geoDbInit("/tmp/GeoIPCity.dat");
@@ -21,7 +21,8 @@ public class GeoTest {
         Tuple[] arguments = new Tuple[] {
                 new Tuple("72.225.254.232"),
                 new Tuple("93.158.134.11"),
-                new Tuple("8.8.8.8")
+                new Tuple("8.8.8.8"),
+                new Tuple("107.208.243.15")
         };
 
         TupleListCollector collector = CascadingTestCase.invokeFunction(geoLookup, arguments, Fields.ALL);
@@ -32,9 +33,10 @@ public class GeoTest {
         }
 
         ArrayList<Tuple> expected = new ArrayList<Tuple>();
-        expected.add(new Tuple("United States", "New York"));
-        expected.add(new Tuple("Russian Federation", null));
-        expected.add(new Tuple("United States", "Mountain View"));
+        expected.add(new Tuple("United States", "New York", 501));
+        expected.add(new Tuple("Russian Federation", null, 0));
+        expected.add(new Tuple("United States", "Mountain View", 807));
+        expected.add(new Tuple(null, null, null));
 
         Assert.assertEquals(expected, results);
     }
